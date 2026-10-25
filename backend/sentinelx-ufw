@@ -1,0 +1,15 @@
+#!/bin/bash
+ACTION="$1"
+IP="$2"
+if [[ ! "$IP" =~ ^[0-9a-fA-F.:]+$ ]]; then
+    echo "INVALID_IP"
+    exit 1
+fi
+if [ "$ACTION" = "block" ]; then
+    ufw deny from "$IP" 2>&1
+elif [ "$ACTION" = "unblock" ]; then
+    ufw delete deny from "$IP" 2>&1
+else
+    echo "INVALID_ACTION"
+    exit 1
+fi
